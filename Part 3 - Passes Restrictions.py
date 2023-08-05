@@ -1,4 +1,3 @@
-# COMP1001 Assignment: Project 2
 # Created by Tuong Bao Nguyen
 # Started 08/05/2023
 
