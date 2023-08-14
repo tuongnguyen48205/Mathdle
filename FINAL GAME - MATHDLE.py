@@ -397,9 +397,32 @@ elif make_own == "random":
     else:
         original = '#' * game_difficulty
         print("\n------------------------------------------------------------------------------------")
-        print(f"Your Mathdle has been generated: {original}")
+        print(f"Your Mathdle has been generated: {original}\n")
+
+while True:
+    # if everything green, break
+    while True:
+        guess = input("Please enter your guess (it must be the same length as the difficulty chosen): ")
+        guess_list = []
+        for item in guess:
+            if item not in DIGITS or item not in EQUALITY or item not in OPERATORS:
+                print("Your guess is invalid.")
+                break
+            else:
+                guess_list.append(item)
+        if len(guess_list) == len(secret):
+            break
+        else:
+            print("Your guess is invalid.")
+            continue
+
+    # Now that we have our guess, we can compare the guess we made to the secret
+    similarity = set_colors(secret, guess)
+    print(similarity)
 
 
 #change information
 # need to add colours and print board as stuff reveals
 # add ai to solve make_own
+#Try again after failed board
+# add endgame
