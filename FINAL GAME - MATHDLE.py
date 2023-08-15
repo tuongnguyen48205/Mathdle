@@ -12,6 +12,8 @@ class Information(Exception):
     pass
 class EndGame(Exception):
     pass
+class Endturn(Exception):
+    pass
 
 #--------------------------------------------------------------
 # Constants
@@ -238,6 +240,8 @@ def set_colors(secret, guess):
 
 #--------------------------------------------------------------
 
+guess_counter = 0
+
 print("\n------------------------------------------------------------------------------------")
 print("                               Welcome to MATHDLE!")
 print("------------------------------------------------------------------------------------\n")
@@ -363,7 +367,8 @@ if make_own == "own":
     print(secret)
 
 elif make_own == "random":
-    print("You have chosen to play the game! Now you will need to select your difficulty.\n")
+    print("\n------------------------------------------------------------------------------------")
+    print("\nYou have chosen to play the game! Now you will need to select your difficulty.\n")
     print("                              Select your Difficulty:\n")
     while True:
         try:
@@ -401,24 +406,40 @@ elif make_own == "random":
 
 while True:
     # if everything green, break
+    # The following code is to input the player's guess and make sure that their guess is valid
     while True:
-        guess = input("Please enter your guess (it must be the same length as the difficulty chosen): ")
-        guess_list = []
-        for item in guess:
-            if item not in DIGITS or item not in EQUALITY or item not in OPERATORS:
-                print("Your guess is invalid.")
+        try:
+            guess = input("Please enter your guess (it must be the same length as the difficulty chosen): ")
+            guess_list = []
+            for item in guess:
+                if item in DIGITS or item in EQUALITY or item in OPERATORS:
+                    guess_list.append(item)
+                else:
+                    raise Endturn
+            if len(guess_list) == len(secret):
                 break
             else:
-                guess_list.append(item)
-        if len(guess_list) == len(secret):
-            break
-        else:
+                raise Endturn
+        except Endturn:
             print("Your guess is invalid.")
-            continue
-
+     
     # Now that we have our guess, we can compare the guess we made to the secret
+    guess_counter += 1 #Increases the number of guesses made by 1
     similarity = set_colors(secret, guess)
-    print(similarity)
+    similarity_list = []
+    for colour in similarity:
+        if colour[-1] == GREEN:
+            similarity_list.append("G")
+        elif colour[-1] == YELLO:
+            similarity_list.append("Y")
+        elif colour[-1] == GREYY:
+            similarity_list.append("g")
+    
+    # Print outcome of guess
+    print("\n------------------------------------------------------------------------------------\n")
+    print(f"For guess number {guess_counter}, here is your outcome:\n")
+    print(guess)
+    print(''.join(similarity_list))
 
 
 #change information
