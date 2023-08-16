@@ -402,14 +402,14 @@ elif make_own == "random":
     else:
         original = '#' * game_difficulty
         print("\n------------------------------------------------------------------------------------")
-        print(f"Your Mathdle has been generated: {original}\n")
+        print(f"\nYour Mathdle has been generated: {original}")
 
 while True:
     # if everything green, break
     # The following code is to input the player's guess and make sure that their guess is valid
     while True:
         try:
-            guess = input("Please enter your guess (it must be the same length as the difficulty chosen): ")
+            guess = input("\nPlease enter your guess (it must be the same length as the difficulty chosen): ")
             guess_list = []
             for item in guess:
                 if item in DIGITS or item in EQUALITY or item in OPERATORS:
@@ -447,3 +447,4 @@ while True:
 # add ai to solve make_own
 #Try again after failed board
 # add endgame
+# show all guesses
