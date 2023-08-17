@@ -27,6 +27,7 @@ NOT_POSSIBLE = "No Mathdle found of that difficulty"
 GREEN = "green"
 YELLO = "yellow"
 GREYY = "grey"
+POSSIBLE_CHARACTER = "+-*%0123456789="
 #--------------------------------------------------------------
 # Functions
 
@@ -238,8 +239,82 @@ def set_colors(secret, guess):
        
     return sorted(mylist)
 
+def create_guess(all_info, difficulty=DEF_DIFFIC):
+    '''
+    Takes information built up from past guesses that is stored in `all_info`, 
+    and uses it as guidance to generate a new guess of length `difficulty`.
+    '''
+    
+    # A placeholder "_" is used to create a list of length 'difficulty'
+    # which will make it easier to work with later on, so each character
+    # in the Mathdle can just replace the placeholder.
+    mylist = []
+    for i in range(difficulty):
+        mylist.append("_")
+              
+    # The following chunk of code goes through all the information. If the 
+    # information has the tag, 'green', the function will use the position
+    # of the information in order to place the character directly where it 
+    # should be within the guess, replacing the placeholder "_".
+    for info in all_info:
+        for item in info:
+            if item[2] == GREEN:
+                mylist[item[0]] = item[1]
+    
+    # The following chunk of code uses a while loop which continues until all
+    # the placeholder "_" are replaced with a possible Mathdle character
+    while "_" in mylist:
+        try:
+            counter = -1  # Counts the position of the character  
+            for character in mylist:
+                counter += 1
+                # Only "_" characters need to be replaced. Other filled spaces
+                # can be ignored.
+                if character == "_":
+                    # A random character needs to be chosen in order to fill
+                    # the "_" placeholder slot.
+                    possible = random.choice(POSSIBLE_CHARACTER)
+                    # The following if statement is for the first time, when
+                    # the all_info list is still an empty list and there is no
+                    # information.
+                    if all_info == []:
+                        mylist[counter] = possible
+                    else:
+                        for info in all_info:
+                            for item in info:
+                                # The following bit of code checks if the 
+                                # randomly chosen character is already in 
+                                # all_info with the same position. If the 
+                                # status is 'grey' or 'yellow' it would not 
+                                # make sense to make this guess since this has
+                                # already been tried and failed and so an
+                                # error is raised after putting the placeholder
+                                # back in. Otherwise, if it is not already in 
+                                # all_info or if it does not have a 'grey' or 
+                                # 'yellow' tag, the possible character replaces 
+                                # the placeholder "_".
+                                if item[1] == possible and item[0] == counter:
+                                    if item[2] == GREYY or item[2] == YELLO:
+                                        mylist[counter] = "_"
+                                        raise ValueError
+                                    else:
+                                        mylist[counter] = possible
+                                else:
+                                    mylist[counter] = possible
+                                    
+        # The error raised previously leads to this exception below which is 
+        # used to instantly break out of the nested loop and since there are 
+        # still placeholder "_" present in the list, the while loop starts
+        # again until there are no  placeholders left.
+        except ValueError:
+            pass          
+
+    return "".join(mylist)
+
+
 #--------------------------------------------------------------
 
+all_info = []
 guess_counter = 0
 
 print("\n------------------------------------------------------------------------------------")
@@ -331,6 +406,7 @@ while True:
     else:
         continue
 
+# The following is for if the player wishes to make their own game and watch an AI solve their game
 if make_own == "own":
     print("\nIn this game, you get a choice of three integers between 0 and 99 and two operators.")
     print("A game will be created based off of these choices you input and an AI will play the")
@@ -342,6 +418,8 @@ if make_own == "own":
     operator2 = "placeholder"
     secret_list = []
     numlist = []
+
+    # The following makes the secret that the AI will solve for
     for i in range(1,100):
         numlist.append(str(i))
     while integer1 not in numlist:
@@ -363,8 +441,61 @@ if make_own == "own":
     final_number = eval(''.join(secret_list).strip("="))
     secret_list.append(str(final_number))
     secret = ''.join(secret_list)
-    print("\nYour choices have been computed. This is the Mathdle game that you have created:")
-    print(secret)
+    print(f"\nYour choices have been computed. This is the Mathdle game that you have created: {secret}")
+    print("\nThe AI will now guess the Mathdle that you have made!")
+    
+    # The following makes guesses, progressively getting closer to the secret each time
+    AI_counter = 0
+    AI_guess = "placeholder"
+    AI_guesses_made = []
+    print("\n------------------------------------------------------------------------------------")
+    while AI_guess != secret:
+        AI_guess = create_guess(all_info, difficulty=len(secret))
+        AI_guesses_made.append(AI_guess)
+        AI_counter += 1
+        all_info.append(set_colors(secret, AI_guess))
+    
+    print(f"\nYour Matdhle has been solved after {AI_counter} guesses: {AI_guess}\n")
+    print("Would you like to see all the guesses that the AI made?")
+    while True:
+        show_AI_guesses = input('Type "yes" to see or "no" to move on: ')
+        if show_AI_guesses == "yes":
+            print("\nHere are all the guesses that the AI made:\n")
+            for i in AI_guesses_made:
+                print(i)
+            print("\nWould you like to play another game?")
+            while True:
+                end = input('Type "new" to play again or type "quit" to exit: ')
+                if end == "new":
+                    process = Process(target=task)
+                    process.start()
+                    process.join()
+                    process.start()
+                elif end == "quit":
+                    print("\n------------------------------------------------------------------------------------")
+                    print("\nThank you for playing!")
+                    print("\n------------------------------------------------------------------------------------")
+                    exit()
+                else:
+                    continue
+        if show_AI_guesses == "no":
+            print("\nWould you like to play another game?")
+            while True:
+                end = input('Type "new" to play again or type "quit" to exit: ')
+                if end == "again":
+                    process = Process(target=task)
+                    process.start()
+                    process.join()
+                    process.start()
+                elif end == "quit":
+                    print("\n------------------------------------------------------------------------------------")
+                    print("\nThank you for playing!")
+                    print("\n------------------------------------------------------------------------------------")
+                    exit()
+                else:
+                    continue
+        else:
+            continue
 
 elif make_own == "random":
     print("\n------------------------------------------------------------------------------------")
@@ -397,8 +528,10 @@ elif make_own == "random":
             print("\n------------------------------------------------------------------------------------")
             exit()
         elif try_again == "yes":
-            pass
-            #either put the whole thing in a while loop or restart the whole program
+            process = Process(target=task)
+            process.start()
+            process.join()
+            process.start()
     else:
         original = '#' * game_difficulty
         print("\n------------------------------------------------------------------------------------")
@@ -428,6 +561,7 @@ while True:
     similarity = set_colors(secret, guess)
     similarity_list = []
     for colour in similarity:
+        all_info.append(colour)
         if colour[-1] == GREEN:
             similarity_list.append("G")
         elif colour[-1] == YELLO:
