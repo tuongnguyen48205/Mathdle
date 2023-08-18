@@ -441,6 +441,7 @@ if make_own == "own":
     final_number = eval(''.join(secret_list).strip("="))
     secret_list.append(str(final_number))
     secret = ''.join(secret_list)
+    print("\n------------------------------------------------------------------------------------\n")
     print(f"\nYour choices have been computed. This is the Mathdle game that you have created: {secret}")
     print("\nThe AI will now guess the Mathdle that you have made!")
     
@@ -482,7 +483,7 @@ if make_own == "own":
             print("\nWould you like to play another game?")
             while True:
                 end = input('Type "new" to play again or type "quit" to exit: ')
-                if end == "again":
+                if end == "new":
                     process = Process(target=task)
                     process.start()
                     process.join()
@@ -537,8 +538,44 @@ elif make_own == "random":
         print("\n------------------------------------------------------------------------------------")
         print(f"\nYour Mathdle has been generated: {original}")
 
+similarity_list = []
 while True:
-    # if everything green, break
+    # The following line is for if the player guessed the secret correctly
+    if set(similarity_list) == {"G"}:
+        break
+
+    # If they make 6 guesses, they will be given a choice of continueing or revealing the secret.
+    if guess_counter == 6:
+        print("\n------------------------------------------------------------------------------------")
+        print("\nYou have made six guesses. You have a choice of ending the game right now and revealing")
+        print("the secret or continue guessing until you get it right!")
+        while True:
+            six_count = input('Type "continue" to continue the game or type "reveal" to end the game and reveal the secret: ')
+            if six_count == "continue":
+                break
+            elif six_count == "reveal":
+                print("\n------------------------------------------------------------------------------------\n")
+                print("The secret will now be revealed! The secret was:")
+                print(f"\n{secret}")
+                print("\n------------------------------------------------------------------------------------\n")
+                print("Would you like to play another game?")
+                while True:
+                    end = input('Type "new" to play again or type "quit" to exit: ')
+                    if end == "new":
+                        process = Process(target=task)
+                        process.start()
+                        process.join()
+                        process.start()
+                    elif end == "quit":
+                        print("\n------------------------------------------------------------------------------------")
+                        print("\nThank you for playing!")
+                        print("\n------------------------------------------------------------------------------------")
+                        exit()
+                    else:
+                        continue
+            else:
+                continue
+
     # The following code is to input the player's guess and make sure that their guess is valid
     while True:
         try:
@@ -575,10 +612,27 @@ while True:
     print(guess)
     print(''.join(similarity_list))
 
+print("\n------------------------------------------------------------------------------------\n")
+print("Congratulations! You have solved the Mathdle!")
+print("The secret was:")
+print(f"\n{secret}")
+print("\n------------------------------------------------------------------------------------\n")
+print("Would you like to play another game?")
+while True:
+    end = input('Type "new" to play again or type "quit" to exit: ')
+    if end == "new":
+        process = Process(target=task)
+        process.start()
+        process.join()
+        process.start()
+    elif end == "quit":
+        print("\n------------------------------------------------------------------------------------")
+        print("\nThank you for playing!")
+        print("\n------------------------------------------------------------------------------------")
+        exit()
+    else:
+        continue
 
 #change information
 # need to add colours and print board as stuff reveals
-# add ai to solve make_own
-#Try again after failed board
-# add endgame
 # show all guesses
