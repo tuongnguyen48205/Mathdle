@@ -553,7 +553,7 @@ if make_own == "own":
     secret_list.append(str(final_number))
     secret = ''.join(secret_list)
     print("\n------------------------------------------------------------------------------------\n")
-    print(f"\nYour choices have been computed. This is the Mathdle game that you have created: {secret}")
+    print(f"Your choices have been computed. This is the Mathdle game that you have created: {secret}")
     print("\nThe AI will now guess the Mathdle that you have made!")
     
     # The following makes guesses, progressively getting closer to the secret each time
@@ -715,6 +715,11 @@ while True:
                 raise ValueError
            # elif guess == "info":
                 # put info here
+            elif guess == "restart":
+                process = Process(target=task)
+                process.start()
+                process.join()
+                process.start()
             else:
                 pass
             
@@ -750,6 +755,7 @@ while True:
     print(f"For guess number {guess_counter}, here is your outcome:\n")
     print(guess)
     print(''.join(similarity_list))
+    
     # Now let the player know if the guess that they made was a good one or a bad one
     good_guess = passes_restrictions(guess, all_info)
     if good_guess == True:
@@ -786,5 +792,5 @@ while True:
 
 # upload intro sequence
 #change information
-# need to add colours and print board as stuff reveals
-# show all guesses
+# add GUI
+# Bug tweaks and fixes
