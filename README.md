@@ -1,5 +1,5 @@
 # Mathdle
-A game created in the coding language of Python
+A game created by Tuong Bao Nguyen in the coding language of Python.
 
 Information:
 
@@ -9,12 +9,10 @@ The player will be given an option to either play the game themself and guess a 
 
 Each cell in the Mathdle contains a single digit, or one of four possible operators “+-*%” or an “=” relationship; and the format of the Mathdle is always {value operator value operator value = result}. That is, each Mathdle always has exactly two operators, one equality, three values, and one result. Each value is an integer between 1 and 99 inclusive, expressed in the minimum number of digits (no leading zeros); and the result is an integer also expressed without any leading zeros. The four operators are “+”, “-”, “*”, “%”, all with exactly the same interpretation as in Python, and with the same precedence as in Python (“*” and “%” are carried out before either of “+” or “-”). The difficulty of a Mathdle game is measured by its length in total characters.
 
-For example, here is a trace
+As you make guesses, your guess will be compared to the hidden randomly generated secret if you choose to play the game. Your guess will be printed and directly underneath the result, the information regarding the guess will be printed as well. Directly underneath each cell of your guess, there will either be a “G” representing the colour green, “g” representing the colour grey, or “Y” representing the colour yellow. If underneath the cell you see a “G”, this means that the character in that cell is correct and is a part of the secret. If underneath the cell you see a “Y”, this means that the character occupying that cell is a part of the secret at some location but not at the location that it is currently occupying. Additionally, if the same character appears again in the guess made and has the tag “g”, it means that there is only one instance of that specific character present in the secret.  If there is a “g” underneath the cell, it means that that character is not present within the secret at all. A good guess is one that makes use of all this information that is revealed from your previous guesses.
 
-As you make guesses, your guess will be compared to the hidden randomly generated secret if you choose to play the game. Your guess will be printed and directly underneath the result, the information regarding the guess will be printed. Directly underneath each cell of your guess, there will either be a “G” representing the colour green, “g” representing the colour grey, or “Y” representing the colour yellow. If underneath the cell you see a “G”, this means that…
+Your guess does not have to be a valid equation. However, the solution to the Mathdle will always be a valid equation. For example, for a Mathdle of length five, even 12345 or +-=%* would be considered valid inputs even though they will never be the secret.
 
-Your guess does not have to be a valid equation…
-
-At any point throughout the game, you have a few options. You can type “quit” to exit the game at any time, type “info” to display all this information, type “guesses” to show all the guesses that you have made so far or even “guess_info” to show all the information related to the guesses that you have made so far for each individual cell or type “restart” to restart the game.
+At any point throughout the game, you have a few options. You can type “quit” to exit the game at any time, type “info” to display all this information, type “guesses” to show all the guesses that you have made so far or even “guess_info” to show all the information related to the guesses that you have made so far for each individual cell or type “restart” to restart the game. Also, a normal game of Wordle will allow the player to make six guesses before the game is over and the secret is revealed. In Mathdle however, after six guesses, the play will be prompted whether or not they wish to end the game. If they wish to end the game, the secret will be revealed, otherwise they are allowed to keep guessing until they get the right answer.
 
 That is all! Have fun playing Mathdle!
