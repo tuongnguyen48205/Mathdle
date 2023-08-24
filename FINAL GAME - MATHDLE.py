@@ -460,9 +460,7 @@ except EndGame:
 
 # The following is for if the player wishes to read information related to the game   
 except Information:
-    inform = "info"
-    controls = "control"
-    rules = "rule"
+    inform = 'With the increased popularity of short daily puzzle games like Wordle during the pandemic, Mathdle is a similar game inspired like the previously mentioned Wordle, except coded by a solo programmer from the ground up. The objective of Wordle is to deduce a secret word by accumulation of evidence, lodging one guess at a time and being given information about how many matching characters you had, and whether they were in the right positions. There is also a well-known physical game called Mastermind that require similar deductive skills. The primary difference between this game and Wordle is that Wordle is a game in which a player guesses a random word, Mathdle is a game in which the player guesses a randomly generated equation, targeted towards people who prefer numbers over words. This game has a target string as a simple math equation of a known length (measured in characters), whereas in Wordle, the target string is a word, and each of the guesses must also be math equations of the same length.\n\nThe player will be given an option to either play the game themself and guess a randomly generated secret or they can input values to create their own secret and watch an AI solve the secret that they have created. If the player wishes to play the game themselves, they will be prompted to choose a difficulty where the number inputted corresponds to the length of the secret and therefore a greater value corresponds to a larger secret and therefore difficulty.\n\nEach cell in the Mathdle contains a single digit, or one of four possible operators “+-*%” or an “=” relationship; and the format of the Mathdle is always {value operator value operator value = result}. That is, each Mathdle always has exactly two operators, one equality, three values, and one result. Each value is an integer between 1 and 99 inclusive, expressed in the minimum number of digits (no leading zeros); and the result is an integer also expressed without any leading zeros. The four operators are “+”, “-”, “*”, “%”, all with exactly the same interpretation as in Python, and with the same precedence as in Python (“*” and “%” are carried out before either of “+” or “-”). The difficulty of a Mathdle game is measured by its length in total characters.\n\nAs you make guesses, your guess will be compared to the hidden randomly generated secret if you choose to play the game. Your guess will be printed and directly underneath the result, the information regarding the guess will be printed as well. Directly underneath each cell of your guess, there will either be a “G” representing the colour green, “g” representing the colour grey, or “Y” representing the colour yellow. If underneath the cell you see a “G”, this means that the character in that cell is correct and is a part of the secret. If underneath the cell you see a “Y”, this means that the character occupying that cell is a part of the secret at some location but not at the location that it is currently occupying. Additionally, if the same character appears again in the guess made and has the tag “g”, it means that there is only one instance of that specific character present in the secret.  If there is a “g” underneath the cell, it means that that character is not present within the secret at all. A good guess is one that makes use of all this information that is revealed from your previous guesses.\n\nYour guess does not have to be a valid equation. However, the solution to the Mathdle will always be a valid equation. For example, for a Mathdle of length five, even 12345 or +-=%* would be considered valid inputs even though they will never be the secret.\n\nAt any point throughout the game, you have a few options. You can type “quit” to exit the game at any time, type “info” to display all this information, type “guesses” to show all the guesses that you have made so far or even “guess_info” to show all the information related to the guesses that you have made so far for each individual cell or type “restart” to restart the game. Also, a normal game of Wordle will allow the player to make six guesses before the game is over and the secret is revealed. In Mathdle however, after six guesses, the play will be prompted whether or not they wish to end the game. If they wish to end the game, the secret will be revealed, otherwise they are allowed to keep guessing until they get the right answer.\n'
     line_list = []
     print("\n------------------------------------------------------------------------------------\n")
     print("                                   How To Play:")
@@ -476,22 +474,7 @@ except Information:
         line_list.append(word)
     print(' '.join(line_list))
     line_list = []
-    print("\nControls:")
-    for word in controls.split():
-        if len(line_list) > 13:
-            print(' '.join(line_list))
-            line_list = []
-        line_list.append(word)
-    print(' '.join(line_list))
-    line_list = []
-    print("\nRules:")
-    for word in rules.split():
-        if len(line_list) > 13:
-            print(' '.join(line_list))
-            line_list = []
-        line_list.append(word)
-    print(' '.join(line_list))
-    line_list = []
+    
     print("\nThat is all! Have fun playing MATHDLE!")
 
     print("\n------------------------------------------------------------------------------------") 
@@ -704,6 +687,7 @@ while True:
                 exit()
             elif guess == "guesses":
                 print("\n------------------------------------------------------------------------------------\n")
+                print(f"So far you have made {guess_counter} guesses! Here are the guesses you have made:\n")
                 for i in guesses_made:
                     print(i)
                 print("\n------------------------------------------------------------------------------------\n")
@@ -713,8 +697,24 @@ while True:
                 print(all_info)
                 print("\n------------------------------------------------------------------------------------\n")
                 raise ValueError
-           # elif guess == "info":
-                # put info here
+            elif guess == "info":
+                inform = 'With the increased popularity of short daily puzzle games like Wordle during the pandemic, Mathdle is a similar game inspired like the previously mentioned Wordle, except coded by a solo programmer from the ground up. The objective of Wordle is to deduce a secret word by accumulation of evidence, lodging one guess at a time and being given information about how many matching characters you had, and whether they were in the right positions. There is also a well-known physical game called Mastermind that require similar deductive skills. The primary difference between this game and Wordle is that Wordle is a game in which a player guesses a random word, Mathdle is a game in which the player guesses a randomly generated equation, targeted towards people who prefer numbers over words. This game has a target string as a simple math equation of a known length (measured in characters), whereas in Wordle, the target string is a word, and each of the guesses must also be math equations of the same length.\n\nThe player will be given an option to either play the game themself and guess a randomly generated secret or they can input values to create their own secret and watch an AI solve the secret that they have created. If the player wishes to play the game themselves, they will be prompted to choose a difficulty where the number inputted corresponds to the length of the secret and therefore a greater value corresponds to a larger secret and therefore difficulty.\n\nEach cell in the Mathdle contains a single digit, or one of four possible operators “+-*%” or an “=” relationship; and the format of the Mathdle is always {value operator value operator value = result}. That is, each Mathdle always has exactly two operators, one equality, three values, and one result. Each value is an integer between 1 and 99 inclusive, expressed in the minimum number of digits (no leading zeros); and the result is an integer also expressed without any leading zeros. The four operators are “+”, “-”, “*”, “%”, all with exactly the same interpretation as in Python, and with the same precedence as in Python (“*” and “%” are carried out before either of “+” or “-”). The difficulty of a Mathdle game is measured by its length in total characters.\n\nAs you make guesses, your guess will be compared to the hidden randomly generated secret if you choose to play the game. Your guess will be printed and directly underneath the result, the information regarding the guess will be printed as well. Directly underneath each cell of your guess, there will either be a “G” representing the colour green, “g” representing the colour grey, or “Y” representing the colour yellow. If underneath the cell you see a “G”, this means that the character in that cell is correct and is a part of the secret. If underneath the cell you see a “Y”, this means that the character occupying that cell is a part of the secret at some location but not at the location that it is currently occupying. Additionally, if the same character appears again in the guess made and has the tag “g”, it means that there is only one instance of that specific character present in the secret.  If there is a “g” underneath the cell, it means that that character is not present within the secret at all. A good guess is one that makes use of all this information that is revealed from your previous guesses.\n\nYour guess does not have to be a valid equation. However, the solution to the Mathdle will always be a valid equation. For example, for a Mathdle of length five, even 12345 or +-=%* would be considered valid inputs even though they will never be the secret.\n\nAt any point throughout the game, you have a few options. You can type “quit” to exit the game at any time, type “info” to display all this information, type “guesses” to show all the guesses that you have made so far or even “guess_info” to show all the information related to the guesses that you have made so far for each individual cell or type “restart” to restart the game. Also, a normal game of Wordle will allow the player to make six guesses before the game is over and the secret is revealed. In Mathdle however, after six guesses, the play will be prompted whether or not they wish to end the game. If they wish to end the game, the secret will be revealed, otherwise they are allowed to keep guessing until they get the right answer.\n'
+                line_list = []
+                print("\n------------------------------------------------------------------------------------\n")
+                print("                                   How To Play:")
+                print("\nA game created by Tuong Bao Nguyen using the programming language of Python")
+                
+                print("\nInformation:")
+                for word in inform.split():
+                    if len(line_list) > 13:
+                        print(' '.join(line_list))
+                        line_list = []
+                    line_list.append(word)
+                print(' '.join(line_list))
+                line_list = []
+                print("\nThat is all! Have fun playing MATHDLE!")
+                print("\n------------------------------------------------------------------------------------")
+                raise ValueError
             elif guess == "restart":
                 process = Process(target=task)
                 process.start()
@@ -770,7 +770,7 @@ while True:
     
 
 print("\n------------------------------------------------------------------------------------\n")
-print("Congratulations! You have solved the Mathdle!")
+print(f"Congratulations! You have solved the Mathdle after {guess_counter} guesses!")
 print("The secret was:")
 print(f"\n{secret}")
 print("\n------------------------------------------------------------------------------------\n")
@@ -790,7 +790,3 @@ while True:
     else:
         continue
 
-# upload intro sequence
-#change information
-# add GUI
-# Bug tweaks and fixes
